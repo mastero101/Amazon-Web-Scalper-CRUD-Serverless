@@ -56,21 +56,22 @@ app.get('/items/prices', (req, res) => {
 
 app.get('/models/:model', (req, res) => {
     const model = req.params.model;
-    const query = 'SELECT * FROM amazon WHERE modelo = ?';
-    const searchTerm = model;
+    const query = 'SELECT * FROM amazon WHERE modelo LIKE ?';
+    const searchTerm = `%${model}%`;
     pool.query(query, searchTerm, (error, results, fields) => {
-      if (error) {
-        console.error('Error al obtener datos de la base de datos:', error);
-        res.status(500).send('Error al obtener datos de la base de datos.');
-        return;
-      }
-      if (results.length === 0) {
-        res.status(404).send('No se encontró ningún usuario con el ID proporcionado.');
-        return;
-      }
-      res.send(results[0]);
+        if (error) {
+            console.error('Error al obtener datos de la base de datos:', error);
+            res.status(500).send('Error al obtener datos de la base de datos.');
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).send('No se encontró ningún elemento que coincida con el modelo proporcionado.');
+            return;
+        }
+        res.send(results);
     });
 });
+
 
 app.post('/item', (req, res) => {
     const data = req.body;
