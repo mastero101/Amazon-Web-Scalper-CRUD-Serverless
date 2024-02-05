@@ -57,7 +57,7 @@ app.get('/items/prices', (req, res) => {
 app.get('/models/:model', (req, res) => {
     const model = req.params.model;
     const query = 'SELECT * FROM amazon WHERE modelo = ?';
-    const searchTerm = `%${model}%`;
+    const searchTerm = model;
     pool.query(query, searchTerm, (error, results, fields) => {
       if (error) {
         console.error('Error al obtener datos de la base de datos:', error);
