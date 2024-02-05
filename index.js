@@ -56,7 +56,7 @@ app.get('/items/prices', (req, res) => {
 
 app.get('/models/:model', (req, res) => {
     const model = req.params.model;
-    const query = 'SELECT * FROM amazon WHERE modelo LIKE ?';
+    const query = 'SELECT * FROM amazon WHERE modelo = ?';
     const searchTerm = `%${model}%`;
     pool.query(query, searchTerm, (error, results, fields) => {
       if (error) {
@@ -69,17 +69,6 @@ app.get('/models/:model', (req, res) => {
         return;
       }
       res.send(results[0]);
-    });
-});
-
-app.get('/procesadores', (req, res) => {
-    pool.query("SELECT modelo, precio, tienda, url, img, consumo, socket FROM componentes WHERE tipo = 'procesador'", (error, results, fields) => {
-        if (error) {
-            console.error('Error al obtener datos de la base de datos:', error);
-            res.status(500).send('Error al obtener datos de la base de datos.');
-            return;
-        }
-        res.send(results);
     });
 });
 
