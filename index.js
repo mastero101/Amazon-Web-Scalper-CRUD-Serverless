@@ -10,7 +10,7 @@ const dbConfig = {
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     port: 3306,
-    ssl: true
+    ssl: false
 };
 
 const pool = mysql.createPool(dbConfig);
